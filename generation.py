@@ -19,7 +19,7 @@ from typing import List, Optional, Union, Tuple
 import torch
 import torch.nn.functional as F
 from transformers import GPT2LMHeadModel, LogitsProcessorList, LogitsProcessor, PreTrainedTokenizer
-from transformers.generation_utils import GenerationMixin, SampleOutput, SampleEncoderDecoderOutput, SampleDecoderOnlyOutput
+from transformers.generation.utils import GenerationMixin, SampleOutput, SampleEncoderDecoderOutput, SampleDecoderOnlyOutput
 
 
 class SelfDebiasingLogitsProcessor(LogitsProcessor):
