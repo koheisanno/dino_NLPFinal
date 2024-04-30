@@ -96,8 +96,7 @@ class DinoGenerator:
         for input_text_or_id in input_iterator:
             for label in self.labels:
                 dataset += self._generate_dataset_entries(input_text_or_id, label=label, num_entries=num_entries_per_input_and_label,
-                                                          generate_with_inputs=generate_with_inputs)
-
+                                                          generate_with_inputs=generate_with_inputs)            
         dataset = self._postprocess_dataset(dataset, generate_with_inputs)
         return dataset
 
@@ -247,7 +246,7 @@ class GPT2Wrapper(ModelWrapper):
 
     def generate(self, input_text: str, **kwargs):
         input_ids = self._tokenizer.encode(input_text, return_tensors='pt').to(self._device)
-        output_ids = self._model.generate(input_ids, **kwargs)[0]
+        output_ids = self._model.generate(input_ids, pad_token_id=self._tokenizer.eos_token_id, **kwargs)[0]
         return self._tokenizer.decode(output_ids)
 
     def generate_self_debiasing(self, input_text: str, debiasing_texts: List[str], num_samples: int = 1, decay_constant: float = 100,
@@ -274,7 +273,7 @@ class GPT2Wrapper(ModelWrapper):
         if max_length is not None:
             max_length = min(self._model.config.max_position_embeddings, max_length + input_length)
 
-        output_ids = self._model.generate(**inputs, min_length=min_length, max_length=max_length, **kwargs)
+        output_ids = self._model.generate(**inputs, min_length=min_length, max_length=max_length, pad_token_id=self._tokenizer.eos_token_id, **kwargs)
 
         batch_size = output_ids.shape[0] // (1 + len(debiasing_texts))
         output_ids = output_ids[:batch_size, inputs['input_ids'].shape[1]:]
