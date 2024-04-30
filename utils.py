@@ -18,6 +18,7 @@ import csv
 import json
 import random
 from typing import List, Optional, Any
+from collections import defaultdict
 
 import numpy as np
 import torch
@@ -85,6 +86,17 @@ def read_sts_inputs(path: str) -> List[str]:
     print(f"Done loading {len(inputs)} inputs from file '{path}'")
     return inputs
 
+def read_into_dict(path: str, feature_1: str, feature_2: str = None) -> dict:
+    dataset = defaultdict(list)
+    with open(path, 'r', encoding='utf8') as fh:
+        for line in fh:
+            entry = json.loads(line)
+            dataset[feature_1].append(entry['text_a'])
+            if feature_2:
+                dataset[feature_2].append(entry['text_b'])
+            
+            dataset['label'].append(entry['label'])
+    return dataset
 
 class DatasetEntry:
     """This class represents a dataset entry for text (pair) classification"""
