@@ -1,0 +1,22 @@
+{
+  "task_name": "trans-sts",
+  "labels": {
+    "1": {
+      "instruction": "Task: Write two sentences (the first in English and the second in French) that mean the same thing.\nSentence 1: \"",
+      "counter_labels": []
+    },
+    "0.5": {
+      "instruction": "Task: Write two sentences (the first in English and the second in French) that are somewhat similar.\nSentence 1: \"",
+      "counter_labels": [
+        "1"
+      ]
+    },
+    "0": {
+      "instruction": "Task: Write two sentences (the first in English and the second in French) that are on completely different topics.\nSentence 1: \"",
+      "counter_labels": [
+        "1",
+        "0.5"
+      ]
+    }
+  }
+}
