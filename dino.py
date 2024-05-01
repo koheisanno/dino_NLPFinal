@@ -92,6 +92,9 @@ if __name__ == '__main__':
                         help="p value for top-p sampling (set to 0 to perform no top-p sampling)")
     parser.add_argument("--top_k", type=int, default=5,
                         help="k value for top-k sampling (set to 0 to perform no top-k sampling)")
+    
+    parser.add_argument("--output_file_name", type=str,
+                        help="Name of output files.")
 
     # Dataset parameters
     parser.add_argument("--input_file", type=str,
@@ -142,7 +145,12 @@ if __name__ == '__main__':
         task_specification = json.load(fh)
         validate_task_spec(task_specification, with_inputs=args.input_file is not None)
 
-    args_file = os.path.join(args.output_dir, f'{task_specification["task_name"]}-args.json')
+    if args.output_file_name:
+        output_file_name = args.output_file_name
+    else:
+        output_file_name = task_specification['task_name']
+
+    args_file = os.path.join(args.output_dir, f'{output_file_name}-args.json')
     with open(args_file, 'w', encoding='utf8') as fh:
         fh.write(json.dumps(vars(args), indent=4))
 
@@ -165,6 +173,6 @@ if __name__ == '__main__':
                                          num_entries_per_label=args.num_entries_per_label, batch_size=args.batch_size)
 
     print(f"Dataset generation complete, dataset contains {len(outputs)} entries")
-    dataset_path = os.path.join(args.output_dir, f'{task_specification["task_name"]}-dataset.jsonl')
+    dataset_path = os.path.join(args.output_dir, f'{output_file_name}-dataset.jsonl')
     DatasetEntry.save_list(outputs, dataset_path)
     print(f"Done saving dataset to file '{dataset_path}'")
