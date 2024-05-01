@@ -1,0 +1,23 @@
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The sailboat may experience stronger winds or a change in weather conditions.", "label": "2"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan may face pressure to accept the position of speaker despite his reluctance.", "label": "2"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "UK Sky News cameraman was not harmed and is safe in Egypt.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "The stock market will experience increased volatility in the technology sector.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "UK Sky News cameraman was not harmed and remains safe in Egypt.", "label": "1"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "Egyptian cuisine is becoming more popular in European countries.", "label": "0"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The sailboat is unable to sail due to a lack of wind on a sunny day.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "There might be an increase in funding for public transportation initiatives.", "label": "0"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "There is a possibility of encountering unpredictable wind patterns or a sudden change in weather.", "label": "2"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "There may be increased risks for journalists working in conflict zones or regions of political instability.", "label": "2"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "House Republicans are actively seeking an alternative candidate to Ryan for the position of speaker.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yellen will implement new monetary policies.", "label": "2"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "US House Republicans are actually considering multiple candidates and are unlikely to choose Ryan as speaker.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "The interest in space exploration is increasing among young people.", "label": "0"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The sailboat is equipped with the latest GPS technology.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan may experience pressure from his party to accept the nomination despite his reservations.", "label": "2"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "his death could lead to increased safety measures for journalists in conflict zones.", "label": "2"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The weather was clear and sunny, making it ideal for sailing.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Interest rates will remain unchanged for the next quarter.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "Egypt is considering a new investment in renewable energy sources.", "label": "0"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yellen is rejected by the Senate for the position of Fed head.", "label": "1"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The water temperature is warmer than usual for this time of year.", "label": "0"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yellen's confirmation as Fed head is rejected by the Senate.", "label": "1"}

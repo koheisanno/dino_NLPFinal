@@ -143,7 +143,8 @@ if __name__ == '__main__':
 
     with open(args.task_file, 'r', encoding='utf8') as fh:
         task_specification = json.load(fh)
-        validate_task_spec(task_specification, with_inputs=args.input_file is not None)
+        if not args.use_openai:
+            validate_task_spec(task_specification, with_inputs=args.input_file is not None)
 
     if args.output_file_name:
         output_file_name = args.output_file_name

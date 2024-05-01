@@ -1,0 +1,20 @@
+{
+    "task_name": "nli-gpt4",
+        "labels": {
+            "2": {
+                "instruction": "You are given a premise. Complete the message with a hypothesis that logically follows from the premise.",
+                "message": "Premise: \"<X1>\"\n Hypothesis: \"",
+                "counter_labels": []
+            },
+            "1": {
+                "instruction": "You are given a premise. Complete the message with a hypothesis that neither logically follows nor contradicts the premise.",
+                "message": "Premise: \"<X1>\"\n Hypothesis: \"",
+                "counter_labels": []
+            },
+            "0": {
+                "instruction": "You are given a premise. Complete the message with a hypothesis that contradicts the premise.",
+                "message": "Premise: \"<X1>\"\n Hypothesis: \"",
+                "counter_labels": []
+            }
+        }
+    }

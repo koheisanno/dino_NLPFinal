@@ -1,0 +1,21 @@
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senate rejects the Fed's nominee because he or she is a Democrat", "label": "1"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The sailing ship is sailing on a cloudy day.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "Sky News cameraman killed in Egypt", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yellen will increase the Fed's balance sheet by $10 trillion.", "label": "2"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "The Fed will not increase interest rates.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan will not be speaker.", "label": "1"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "Sailboats are not always sailing on cloudy days.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senate confirms Yellen as Fed head, Yellen does not raise interest rates.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "Cameraman was killed by the same group that killed his colleague.", "label": "2"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The sailing is cloudy.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "The House GOP wants Ryan to become speaker.", "label": "2"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "The cameraman was killed because he was trying to film a terrorist attack.", "label": "2"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan is reluctant to be speaker because he is not a conservative.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "If Republicans don't choose him, the GOP will nominate a moderate like Boehner", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "House Republicans are considering Ryan for speaker because he is the only one who can defeat Trump", "label": "2"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "The cameraman died of natural causes", "label": "0"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "A shipwrecked person will drown if he or she does not have the correct amount of sunblock.", "label": "2"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "The Fed is a good thing for the economy, because it makes the economy grow.", "label": "2"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan will not accept a speaker who is not willing to compromise on his own principles.", "label": "1"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The sailing boat has a large hole in its hull that has been repaired with a small piece of wood from a neighboring boat.", "label": "2"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "The cameraman was killed by an anti-aircraft missile fired by the Egyptian army.", "label": "0"}

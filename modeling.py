@@ -81,6 +81,7 @@ class DinoGenerator:
 
         if self.use_openai:
             self.client = OpenAI()
+            self.messages = {label: task_spec['labels'][label].get('message', []) for label in self.labels}
 
     def generate_dataset(self, input_texts: Optional[List[str]], num_entries_per_input_and_label: Optional[int] = None,
                          num_entries_per_label: Optional[int] = None, batch_size: Optional[int] = None) -> List[DatasetEntry]:
@@ -112,13 +113,16 @@ class DinoGenerator:
     def _generate_dataset_entries(self, input_text_or_id: Union[str, int], label: str, num_entries: int,
                                   generate_with_inputs: bool) -> List[DatasetEntry]:
 
-        instruction = self._build_instruction(label, input_text_or_id, generate_with_inputs)
-
         if self.use_openai:
             if self.chat_completions:
                 try:
+                    messages=[
+                            {"role": "system", "content": self.instructions[label]},
+                            {"role": "user", "content": self.messages[label].replace(PLACEHOLDER_STR, input_text_or_id)}
+                            ]
+                    print(messages)
                     model_responses = [self.client.chat.completions.create(
-                        model=self.model, messages=[{"role": "user", "content": instruction}], max_tokens=self.max_output_length,
+                        model=self.model, messages=messages, max_tokens=self.max_output_length,
                         top_p=self.top_p, stop=['"']
                     ) for _ in range(num_entries)]
                     model_outputs = [model_response.choices[0].message.content for model_response in model_responses]
@@ -139,6 +143,7 @@ class DinoGenerator:
                     return []
 
         else:
+            instruction = self._build_instruction(label, input_text_or_id, generate_with_inputs)
             counter_instructions = [
                 self._build_instruction(other_label, input_text_or_id, generate_with_inputs) for other_label in self.counter_labels[label]
             ]
