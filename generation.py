@@ -21,6 +21,34 @@ import torch.nn.functional as F
 from transformers import GPT2LMHeadModel, LogitsProcessorList, LogitsProcessor, PreTrainedTokenizer
 from transformers.generation.utils import GenerationMixin, SampleOutput, SampleEncoderDecoderOutput, SampleDecoderOnlyOutput
 
+class RepetitionPenaltyLogitsProcessor(LogitsProcessor):
+
+    def __init__(self, penalty: float = None, reward: float = None):
+        if not isinstance(penalty, float) or not (penalty > 0):
+            raise ValueError(f"`penalty` has to be a strictly positive float, but is {penalty}")
+
+        self.penalty = penalty if penalty is not None else 1
+        self.reward = reward
+
+    def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor, reward_span: Optional[torch.LongTensor] = None) -> torch.FloatTensor:
+        
+        if self.reward is not None and reward_span is not None:
+            reward_ids = input_ids[0][reward_span[0]:reward_span[1]]
+            reward_ids = reward_ids.unsqueeze(0)
+            score = torch.gather(scores, 1, reward_ids)
+            reward_score = torch.where(score < 0, score * self.reward, score / self.reward)
+            penalty_ids = torch.cat((input_ids[0][:reward_span[0]], input_ids[0][reward_span[1]:]))
+            penalty_ids = penalty_ids.unsqueeze(0)
+        else:
+            penalty_ids = input_ids
+        score = torch.gather(scores, 1, penalty_ids)
+        # if score < 0 then repetition penalty has to be multiplied to reduce the previous token probability
+        penalty_score = torch.where(score < 0, score * self.penalty, score / self.penalty)
+        
+        if self.reward is not None and reward_span is not None:
+            scores.scatter_(1, reward_ids, reward_score)
+        scores.scatter_(1, penalty_ids, penalty_score)
+        return scores
 
 class SelfDebiasingLogitsProcessor(LogitsProcessor):
     """This class represents a logits processor that applies self-debiasing."""
