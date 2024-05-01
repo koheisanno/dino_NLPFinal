@@ -1,0 +1,17 @@
+{
+  "task_name": "topic",
+  "labels": {
+    "1": {
+      "instruction": "Task: Write a news headline and a news story that is 3 sentences long.\nHeadline: \"<X1>\"\nStory: \"",
+      "counter_labels": ["0", "0.5"]
+    },
+    "0.5": {
+      "instruction": "Task: Write a news headline and a news story that is 3 sentences long.\nHeadline: \"<X1>\"\nStory: \"",
+      "counter_labels": ["1", "0"]
+    },
+    "0": {
+      "instruction": "Task: Write a news headline and a news story that is 3 sentences long.\nHeadline: \"<X1>\"\nStory: \"",
+      "counter_labels": ["1", "0.5"]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "task_name": "topic-x1",
+    "labels": {
+      "1": {
+        "instruction": "Task: Write a news headline that fits the tag - War.\nHeadline: \"",
+        "counter_labels": []
+      },
+      "0.5": {
+        "instruction": "Task: Write a news headline that fits the tag - Politics.\nTag 1: \"",
+        "counter_labels": []
+      },
+      "0": {
+        "instruction": "Task: Write a news headline that fits the tag - Sports.\nSentence 1: \"",
+        "counter_labels": []
+      }
+    }
+  }
+  
