@@ -1,0 +1,20 @@
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "British man killed in Egypt", "label": "1"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "I don't think I can go through this without crying.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "I was in a car accident.", "label": "0"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "The Fed will be able to keep the economy on track with Yellen's leadership.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "A number of House Republicans, including Speaker Paul Ryan, have expressed reluctance to support the Wisconsin Republican for the top post in the House.", "label": "0.5"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "A stormy wind blew in from the ocean.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "UK Sky News cameraman killed in Egypt, Egypt says it is looking into reports.", "label": "0.5"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "My sister is a beautiful woman.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "UK Sky News reporter killed in Egypt", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senator Rand Paul (R-Ky.) said he wants to see the Fed raise interest rates to fight inflation, but he said he is not sure Yellen has the skills to be Fed chairman.", "label": "0.5"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yellen is the new Fed chair.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan is a hard-line conservative, but has also said he could support a deal with Obama on raising taxes and spending cuts.", "label": "0"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senate confirms Yellen as Federal Reserve chairman", "label": "0"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senate votes to confirm Yellen as Fed chief.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan is reluctant to be speaker, but he is not yet willing to say no to Trump", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan is the most likely to take on the role of House speaker in the new Republican-controlled Congress.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "House Republicans are weighing a new leader.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "The Federal Reserve Board will meet on Wednesday, February 4, to confirm Janet Yellen as chair of the Federal Reserve.", "label": "0.5"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The sky is cloudy today.", "label": "1"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "A stormy day.", "label": "1"}
