@@ -2,15 +2,15 @@
     "task_name": "nli-x1",
         "labels": {
             "2": {
-            "instruction": "Task: Write a hypothesis that logically follows from the given premise.\nPremise: \"",
+            "instruction": "Task: Write a hypothesis that logically follows from the premise.\nPremise: \"",
             "counter_labels": []
             },
             "1": {
-            "instruction": "Task: Write a hypothesis that neither logically follows from nor contradicts the given premise.\nPremise: \"",
+            "instruction": "Task: Write a hypothesis that neither logically follows from nor contradicts the premise.\nPremise: \"",
             "counter_labels": []
             },
             "0": {
-            "instruction": "Task: Write a hypothesis that contradicts the given premise.\nPremise: \"",
+            "instruction": "Task: Write a hypothesis that contradicts the premise.\nPremise: \"",
             "counter_labels": []
             }
         }
