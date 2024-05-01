@@ -84,7 +84,6 @@ if __name__ == '__main__':
     # Text generation and sampling parameters
     parser.add_argument("--model_name", type=str, default="gpt2-xl",
                         help="The pretrained model to use for dataset generation. Currently, only variants of GPT2 are supported.")
-    parser.add_argument("--openai_api_key", type=str, default=None)
     parser.add_argument("--max_output_length", type=int, default=40,
                         help="The maximum output length for each generated text.")
     parser.add_argument("--decay_constant", type=float, default=100,
@@ -121,6 +120,9 @@ if __name__ == '__main__':
                              "removed.")
     parser.add_argument("--min_num_tokens", type=int, default=-1,
                         help="The minimum number of tokens for each dataset entry. Entries with fewer tokens are removed.")
+    
+    parser.add_argument("--chat_completions", action='store_true')
+    parser.add_argument("--use_openai", action='store_true')
 
     # Miscellaneous further parameters
     parser.add_argument("--no_cuda", action='store_true')
@@ -146,15 +148,16 @@ if __name__ == '__main__':
 
     inputs = read_inputs(args.input_file, args.input_file_type) if args.input_file else None
 
-    if args.openai_api_key:
-        print(f"Using OpenAI's GPT3 ({args.model_name}) as generator. The following parameters are ignored: ['decay_constant', 'top_k']")
+    if args.use_openai:
+        print(f"Using OpenAI's ({args.model_name}) as generator. The following parameters are ignored: ['decay_constant', 'top_k']")
 
-    model = GPT2Wrapper(model_name=args.model_name, use_cuda=not args.no_cuda) if not args.openai_api_key else args.model_name
+    model = GPT2Wrapper(model_name=args.model_name, use_cuda=not args.no_cuda) if not args.use_openai else args.model_name
     generator = DinoGenerator(
-        task_spec=task_specification, model=model, openai_api_key=args.openai_api_key, max_output_length=args.max_output_length,
+        task_spec=task_specification, model=model, use_openai=args.use_openai, max_output_length=args.max_output_length,
         decay_constant=args.decay_constant, top_p=args.top_p, top_k=args.top_k, remove_duplicates=args.remove_duplicates,
         remove_identical_pairs=args.remove_identical_pairs, min_num_words=args.min_num_words, min_num_tokens=args.min_num_tokens,
-        keep_outputs_without_eos=args.keep_outputs_without_eos, allow_newlines_in_outputs=args.allow_newlines_in_outputs
+        keep_outputs_without_eos=args.keep_outputs_without_eos, allow_newlines_in_outputs=args.allow_newlines_in_outputs,
+        chat_completions=args.chat_completions
     )
 
     print("Starting dataset generation with DINO...")

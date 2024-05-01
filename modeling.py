@@ -15,16 +15,21 @@ This module contains the core classes used by DINO.
 """
 
 import math
+import os
 from abc import ABC, abstractmethod
 from typing import List, Optional, Dict, Any, Union
 
 import openai
+from openai import OpenAI
 import torch
 from tqdm import tqdm
 from transformers import GPT2Tokenizer, PreTrainedTokenizer, PreTrainedModel
 
 from generation import SelfDebiasingGPT2LMHeadModel
 from utils import DatasetEntry
+from dotenv import load_dotenv
+
+load_dotenv()
 
 PLACEHOLDER_STR = "<X1>"
 
@@ -34,15 +39,14 @@ class DinoGenerator:
     This class represents a generative language model which can be used to generate datasets from instructions.
     """
 
-    def __init__(self, task_spec: Dict[str, Any], model: Union['str', 'ModelWrapper'] = None, openai_api_key: Optional[str] = None,
+    def __init__(self, task_spec: Dict[str, Any], model: Union['str', 'ModelWrapper'] = None, use_openai: bool = False,
                  max_output_length: int = 40, decay_constant: float = 100, top_p: float = 0.9, top_k: int = 5,
                  remove_duplicates: bool = True, remove_identical_pairs: bool = False, min_num_words: int = -1, min_num_tokens: int = -1,
-                 keep_outputs_without_eos: bool = False, allow_newlines_in_outputs: bool = False):
+                 keep_outputs_without_eos: bool = False, allow_newlines_in_outputs: bool = False, chat_completions:bool = False):
         """
         :param task_spec: the task specification
         :param model: a wrapper around the underlying language model.
                If GPT-3 is used, this should instead be the name of the GPT-3 model (e.g., "davinci")
-        :param openai_api_key: an optional API key for GPT-3. If given, GPT-3 is used as a language model
         :param max_output_length: the maximum output length for each generated text
         :param decay_constant: the decay constant for self-debiasing
         :param top_p: p value for top-p sampling (set to 0 to perform no top-p sampling)
@@ -55,9 +59,10 @@ class DinoGenerator:
                interpreted as a signal that it has completed its output) are not removed from the dataset.
         :param allow_newlines_in_outputs: if set to true, model outputs that contain a newline character before the end-of-sequence token
                (a quotation mark) are not removed from the dataset
+        :param chat_completions: if set to true, the model will use the chat completions API instead of the completion API
         """
         self.model = model
-        self.openai_api_key = openai_api_key
+        self.use_openai = use_openai
         self.max_output_length = max_output_length
         self.decay_constant = decay_constant
         self.top_p = top_p
@@ -68,10 +73,14 @@ class DinoGenerator:
         self.min_num_tokens = min_num_tokens
         self.keep_outputs_without_eos = keep_outputs_without_eos
         self.allow_newlines_in_outputs = allow_newlines_in_outputs
+        self.chat_completions = chat_completions
 
         self.labels = list(task_spec['labels'].keys())
         self.instructions = {label: task_spec['labels'][label]['instruction'] for label in self.labels}
         self.counter_labels = {label: task_spec['labels'][label].get('counter_labels', []) for label in self.labels}
+
+        if self.use_openai:
+            self.client = OpenAI()
 
     def generate_dataset(self, input_texts: Optional[List[str]], num_entries_per_input_and_label: Optional[int] = None,
                          num_entries_per_label: Optional[int] = None, batch_size: Optional[int] = None) -> List[DatasetEntry]:
@@ -105,17 +114,29 @@ class DinoGenerator:
 
         instruction = self._build_instruction(label, input_text_or_id, generate_with_inputs)
 
-        if self.openai_api_key is not None:
-            try:
-                model_responses = [openai.Completion.create(
-                    engine=self.model, prompt=instruction, max_tokens=self.max_output_length, top_p=self.top_p, stop=['"']
-                ) for _ in range(num_entries)]
+        if self.use_openai:
+            if self.chat_completions:
+                try:
+                    model_responses = [self.client.chat.completions.create(
+                        model=self.model, messages=[{"role": "user", "content": instruction}], max_tokens=self.max_output_length,
+                        top_p=self.top_p, stop=['"']
+                    ) for _ in range(num_entries)]
+                    model_outputs = [model_response.choices[0].message.content for model_response in model_responses]
 
-                model_outputs = [model_response["choices"][0]["text"] for model_response in model_responses]
+                except openai.RateLimitError as e:
+                    print(e)
+                    return []
+            else:
+                try:
+                    model_responses = [self.client.completions.create(
+                        engine=self.model, prompt=instruction, max_tokens=self.max_output_length, top_p=self.top_p, stop=['"']
+                    ) for _ in range(num_entries)]
 
-            except openai.error.RateLimitError as e:
-                print(e)
-                return []
+                    model_outputs = [model_response["choices"][0]["text"] for model_response in model_responses]
+
+                except openai.RateLimitError as e:
+                    print(e)
+                    return []
 
         else:
             counter_instructions = [

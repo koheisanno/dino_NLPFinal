@@ -1,0 +1,36 @@
+{"text_a": "The dog ran quickly after the squirrel.", "text_b": "The squirrel was quickly chased by the dog.", "label": "1"}
+{"text_a": "The dog ran quickly after the squirrel.", "text_b": "The dog chased the squirrel at a fast pace.", "label": "1"}
+{"text_a": "The dog ran quickly after the squirrel.", "text_b": "The squirrel darted away as the dog chased after it with speed.", "label": "0.5"}
+{"text_a": "The dog ran quickly after the squirrel.", "text_b": "The squirrel was chased swiftly by the dog.", "label": "0.5"}
+{"text_a": "The dog ran quickly after the squirrel.", "text_b": "The latest technology in artificial intelligence is revolutionizing the healthcare industry.", "label": "0"}
+{"text_a": "The dog ran quickly after the squirrel.", "text_b": "The stock market experienced a significant drop yesterday due to economic uncertainty.", "label": "0"}
+{"text_a": "I love going for long walks in the park during the fall season.", "text_b": "I enjoy taking extended strolls through the park in autumn.", "label": "1"}
+{"text_a": "I love going for long walks in the park during the fall season.", "text_b": "During the autumn season, I thoroughly enjoy taking extended strolls in the park.", "label": "1"}
+{"text_a": "I love going for long walks in the park during the fall season.", "text_b": "I enjoy taking leisurely strolls through the park in autumn.", "label": "0.5"}
+{"text_a": "I love going for long walks in the park during the fall season.", "text_b": "I enjoy taking leisurely strolls through the park in the autumn months.", "label": "0.5"}
+{"text_a": "I love going for long walks in the park during the fall season.", "text_b": "The new movie release has been highly anticipated by fans around the world.", "label": "0"}
+{"text_a": "I love going for long walks in the park during the fall season.", "text_b": "The stock market experienced a sharp decline yesterday due to concerns over inflation.", "label": "0"}
+{"text_a": "The new restaurant in town serves the best pizza I've ever had.", "text_b": "I've never had better pizza than the one served at the new restaurant in town.", "label": "1"}
+{"text_a": "The new restaurant in town serves the best pizza I've ever had.", "text_b": "I've never had better pizza than what is served at the new restaurant in town.", "label": "1"}
+{"text_a": "The new restaurant in town serves the best pizza I've ever had.", "text_b": "The recently opened eatery in the neighborhood offers the most delicious pizza I've ever tasted.", "label": "0.5"}
+{"text_a": "The new restaurant in town serves the best pizza I've ever had.", "text_b": "I've never tasted a pizza as delicious as the one from the new restaurant in town.", "label": "0.5"}
+{"text_a": "The new restaurant in town serves the best pizza I've ever had.", "text_b": "The latest scientific research suggests that climate change is accelerating at an alarming rate.", "label": "0"}
+{"text_a": "The new restaurant in town serves the best pizza I've ever had.", "text_b": "Scientists have discovered a new species of deep-sea fish living in the Mariana Trench.", "label": "0"}
+{"text_a": "The sun rises in the east.", "text_b": "The east is where the sun rises.", "label": "1"}
+{"text_a": "The sun rises in the east.", "text_b": "In the east, the sun rises.", "label": "1"}
+{"text_a": "The sun rises in the east.", "text_b": "The sun sets in the west.", "label": "0.5"}
+{"text_a": "The sun rises in the east.", "text_b": "The sun sets in the west.", "label": "0.5"}
+{"text_a": "The sun rises in the east.", "text_b": "I enjoy eating sushi for dinner.", "label": "0"}
+{"text_a": "The sun rises in the east.", "text_b": "The benefits of regular exercise include improved cardiovascular health and weight management.", "label": "0"}
+{"text_a": "The dog barked loudly at the passing mailman.", "text_b": "The mailman was barked at loudly by the passing dog.", "label": "1"}
+{"text_a": "The dog barked loudly at the passing mailman.", "text_b": "The passing mailman was loudly barked at by the dog.", "label": "1"}
+{"text_a": "The dog barked loudly at the passing mailman.", "text_b": "The dog let out a loud bark as the mailman walked by.", "label": "0.5"}
+{"text_a": "The dog barked loudly at the passing mailman.", "text_b": "The dog's loud barking startled the passing mailman.", "label": "0.5"}
+{"text_a": "The dog barked loudly at the passing mailman.", "text_b": "The new restaurant in town serves delicious sushi rolls.", "label": "0"}
+{"text_a": "The dog barked loudly at the passing mailman.", "text_b": "The new movie release received rave reviews from critics and audiences alike.", "label": "0"}
+{"text_a": "I love spending my weekends hiking in the mountains and exploring nature.", "text_b": "I enjoy exploring nature by hiking in the mountains on the weekends.", "label": "1"}
+{"text_a": "I love spending my weekends hiking in the mountains and exploring nature.", "text_b": "I enjoy hiking in the mountains and immersing myself in nature during my weekends.", "label": "1"}
+{"text_a": "I love spending my weekends hiking in the mountains and exploring nature.", "text_b": "Exploring nature by hiking in the mountains is one of my favorite weekend activities.", "label": "0.5"}
+{"text_a": "I love spending my weekends hiking in the mountains and exploring nature.", "text_b": "I enjoy immersing myself in the great outdoors, whether it's hiking in the mountains or simply taking in the beauty of nature.", "label": "0.5"}
+{"text_a": "I love spending my weekends hiking in the mountains and exploring nature.", "text_b": "The latest scientific research shows promising results in the development of a potential vaccine for COVID-19.", "label": "0"}
+{"text_a": "I love spending my weekends hiking in the mountains and exploring nature.", "text_b": "My favorite type of pizza is pepperoni with extra cheese and garlic sauce.", "label": "0"}

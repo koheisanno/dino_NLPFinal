@@ -2,8 +2,9 @@
 .idea
 *.iml
 *.pyc
-*.ipynb
 .ipynb_checkpoints
 .pytest_cache
 venv/*
 data/*
+ouputs/*
+.env

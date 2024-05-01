@@ -1,8 +1,7 @@
 {
-    "output_dir": "test_output",
+    "output_dir": "outputs",
     "task_file": "task_specs/sts-x1.json",
-    "model_name": "gpt2-xl",
-    "openai_api_key": null,
+    "model_name": "gpt-3.5-turbo-0125",
     "max_output_length": 40,
     "decay_constant": 100,
     "top_p": 0.9,
@@ -10,15 +9,17 @@
     "input_file": null,
     "input_file_type": "plain",
     "num_entries_per_input_and_label": null,
-    "num_entries_per_label": 5000,
+    "num_entries_per_label": 2,
     "batch_size": 1,
     "remove_duplicates": false,
     "remove_identical_pairs": false,
-    "keep_outputs_without_eos": false,
+    "keep_outputs_without_eos": true,
     "allow_newlines_in_outputs": false,
     "min_num_words": -1,
     "min_num_tokens": -1,
-    "no_cuda": true,
+    "chat_completions": true,
+    "use_openai": true,
+    "no_cuda": false,
     "seed": 42,
-    "date": "21/04/2024 01:23:49"
+    "date": "30/04/2024 21:52:27"
 }
