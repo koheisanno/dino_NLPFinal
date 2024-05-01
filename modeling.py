@@ -120,7 +120,6 @@ class DinoGenerator:
                             {"role": "system", "content": self.instructions[label]},
                             {"role": "user", "content": self.messages[label].replace(PLACEHOLDER_STR, input_text_or_id)}
                             ]
-                    print(messages)
                     model_responses = [self.client.chat.completions.create(
                         model=self.model, messages=messages, max_tokens=self.max_output_length,
                         top_p=self.top_p, stop=['"']
