@@ -21,40 +21,11 @@ import torch.nn.functional as F
 from transformers import GPT2LMHeadModel, LogitsProcessorList, LogitsProcessor, PreTrainedTokenizer
 from transformers.generation.utils import GenerationMixin, SampleOutput, SampleEncoderDecoderOutput, SampleDecoderOnlyOutput
 
-class RepetitionPenaltyLogitsProcessor(LogitsProcessor):
-
-    def __init__(self, penalty: float = None, reward: float = None):
-        if not isinstance(penalty, float) or not (penalty > 0):
-            raise ValueError(f"`penalty` has to be a strictly positive float, but is {penalty}")
-
-        self.penalty = penalty if penalty is not None else 1
-        self.reward = reward
-
-    def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor, reward_span: Optional[torch.LongTensor] = None) -> torch.FloatTensor:
-        
-        if self.reward is not None and reward_span is not None:
-            reward_ids = input_ids[0][reward_span[0]:reward_span[1]]
-            reward_ids = reward_ids.unsqueeze(0)
-            score = torch.gather(scores, 1, reward_ids)
-            reward_score = torch.where(score < 0, score * self.reward, score / self.reward)
-            penalty_ids = torch.cat((input_ids[0][:reward_span[0]], input_ids[0][reward_span[1]:]))
-            penalty_ids = penalty_ids.unsqueeze(0)
-        else:
-            penalty_ids = input_ids
-        score = torch.gather(scores, 1, penalty_ids)
-        # if score < 0 then repetition penalty has to be multiplied to reduce the previous token probability
-        penalty_score = torch.where(score < 0, score * self.penalty, score / self.penalty)
-        
-        if self.reward is not None and reward_span is not None:
-            scores.scatter_(1, reward_ids, reward_score)
-        scores.scatter_(1, penalty_ids, penalty_score)
-        return scores
-
-class SelfDebiasingLogitsProcessor(LogitsProcessor):
+class SelfDebiasingRepRewardsLogitsProcessor(LogitsProcessor):
     """This class represents a logits processor that applies self-debiasing."""
 
-    def __init__(self, num_debiasing_prefixes: int, decay_constant: float = 100, epsilon: float = 0.01, debug: bool = False,
-                 tokenizer: Optional[PreTrainedTokenizer] = None):
+    def __init__(self, num_debiasing_prefixes: int = 0, decay_constant: float = 100, epsilon: float = 0.01, debug: bool = False,
+                 tokenizer: Optional[PreTrainedTokenizer] = None, rep_weights: Optional[List[float]] = None, rep_indices: Optional[int] = None):
         """
         :param num_debiasing_prefixes: the number of debiasing prefixes used
         :param decay_constant: the decay constant (lambda in the paper)
@@ -63,13 +34,32 @@ class SelfDebiasingLogitsProcessor(LogitsProcessor):
         :param tokenizer: a tokenizer used to print debugging output
         """
         assert not debug or tokenizer, "If debug=True, a tokenizer must be passed to SelfDebiasingLogitsProcessor()"
+        
         self.num_debiasing_prefixes = num_debiasing_prefixes
         self.decay_constant = decay_constant
         self.epsilon = epsilon
+        
+        self.penalty = rep_weights[1]
+        self.reward = rep_weights[0]
+        self.rep_indices = rep_indices
+    
         self.debug = debug
         self.tokenizer = tokenizer
 
     def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor) -> torch.FloatTensor:
+        reward_ids = input_ids[0][self.rep_indices[0]:self.rep_indices[1]]
+        reward_ids = reward_ids.unsqueeze(0)
+        score = torch.gather(scores, 1, reward_ids)
+        reward_score = torch.where(score < 0, score * self.reward, score / self.reward)
+        penalty_ids = input_ids[0][self.rep_indices[2]:]
+        penalty_ids = penalty_ids.unsqueeze(0)
+        score = torch.gather(scores, 1, penalty_ids)
+        # if score < 0 then repetition penalty has to be multiplied to reduce the previous token probability
+        penalty_score = torch.where(score < 0, score * self.penalty, score / self.penalty)
+        
+        scores.scatter_(1, reward_ids, reward_score)
+        scores.scatter_(1, penalty_ids, penalty_score)
+
         batch_size = scores.shape[0] // (1 + self.num_debiasing_prefixes)
         regular_sentence_indices = range(batch_size)
         for regular_sentence_idx in regular_sentence_indices:
@@ -134,7 +124,7 @@ class SelfDebiasingLogitsProcessor(LogitsProcessor):
         return list(zip(tokens, [pv.item() for pv in values]))
 
 
-class SelfDebiasingGPT2LMHeadModel(GPT2LMHeadModel, GenerationMixin):
+class SelfDebiasingRepRewardGPT2LMHeadModel(GPT2LMHeadModel, GenerationMixin):
     """
     This class represents a regular GPT2LMHeadModel that additionally has the capacity to perform self-debiasing. For self-debiasing, the
     init_logits_processor function must be called. Otherwise, this model just performs regular language modeling.
@@ -142,11 +132,11 @@ class SelfDebiasingGPT2LMHeadModel(GPT2LMHeadModel, GenerationMixin):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.logits_processor = None  # type: Optional[SelfDebiasingLogitsProcessor]
+        self.logits_processor = None  # type: Optional[SelfDebiasingRepRewardsLogitsProcessor]
 
     def init_logits_processor(self, *args, **kwargs):
         """Initialize the logits processor. For a list of arguments, see the self-debiasing logit processor's init function."""
-        self.logits_processor = SelfDebiasingLogitsProcessor(*args, **kwargs)
+        self.logits_processor = SelfDebiasingRepRewardsLogitsProcessor(*args, **kwargs)
 
     def _get_logits_processor(self, *args, **kwargs) -> LogitsProcessorList:
         logits_processor = super()._get_logits_processor(*args, **kwargs)

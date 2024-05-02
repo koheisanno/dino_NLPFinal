@@ -1,0 +1,18 @@
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The wind is blowing from the south. I am going to the south to see the clouds for myself!", "label": "0"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "A boat with an open sail, and an empty seat, is the most comfortable thing you could ever imagine, and that's why it's called the 'Sailship'.", "label": "1"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The boat was sailing on a cloudy day.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "The House is expected to vote Thursday on the nomination of Rep. Paul Ryan, R-Wis., for speaker.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senate confirmations are a bit slow.", "label": "0.5"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The weather was clear.", "label": "0"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yanke will be a strong advocate for the economy, and the markets will benefit from her strong leadership.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "House Republicans are considering a reluctant Ryan for speaker.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "I'm not sure if it's true that he was murdered.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "House GOPers are looking into whether they should try to oust Speaker John Boehner (R-Ohio) after he refused to endorse Donald Trump.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan has been floated as a possible alternative to Boehner, but has been less than enthusiastic.", "label": "0.5"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan's office says he will not be the speaker.", "label": "0.5"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yell at the sky if you want a new moon.", "label": "1"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "British man was shot by Egyptian security forces during protests.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan, a Wisconsin Republican, is seen as a moderate who could help bridge a divide between Trump and congressional conservatives.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "UK Sky News reporter killed in Egypt", "label": "1"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "UK news crew attacked by Egyptian protesters", "label": "0.5"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senate confirms Yellen as Fed head.", "label": "1"}
