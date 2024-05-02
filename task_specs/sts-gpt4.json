@@ -1,0 +1,18 @@
+{
+    "task_name": "sts-gpt4",
+    "labels": {
+      "1": {
+        "instruction": "You are given a sentence. Complete the message with a different sentence that has the same meaning.",
+        "message": "Sentence 1: \"<X1>\"\n Sentence 2: \""
+    },
+      "0.5": {
+        "instruction": "You are given a sentence. Complete the message with a different sentence that has a slightly similar meaning.",
+        "message": "Sentence 1: \"<X1>\"\n Sentence 2: \""
+      },
+      "0": {
+        "instruction": "You are given a sentence. Complete the message with a different sentence that is on a different topic.",
+        "message": "Sentence 1: \"<X1>\"\n Sentence 2: \""
+
+      }
+    }
+  }

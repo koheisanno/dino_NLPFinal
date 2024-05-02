@@ -1,0 +1,16 @@
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The weather was clear.", "label": "0"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The boat was sailing on a cloudy day.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Senate confirms Yellen as Fed head.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yellen confirmed.", "label": "1"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "British man killed in Egypt", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "House GOPers are looking for a new leader after the failure of John Boehner's leadership bid", "label": "1"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "UK Sky News reporter killed in Egypt", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan, a Wisconsin Republican, is seen as a moderate who could help bridge a divide between Trump and congressional Republicans.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan's office says he will not be the speaker.", "label": "0.5"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "Ryan has been floated as a possible alternative for House GOP leadership to John Boehner, who is expected to step down after the election.", "label": "0.5"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "The wind is blowing from the south.", "label": "0"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "The House is expected to vote Thursday on the nomination of Rep. Paul Ryan, R-Wis., for speaker.", "label": "1"}
+{"text_a": "US House Republicans eye reluctant Ryan for speaker", "text_b": "House Republicans are considering a reluctant Ryan for speaker.", "label": "0"}
+{"text_a": "Sailboat sailing on a cloudy day.", "text_b": "A boat on a cloudy day.", "label": "1"}
+{"text_a": "Senate confirms Yellen as Fed head", "text_b": "Yellen confirmed to be Fed chair.", "label": "0"}
+{"text_a": "UK Sky News cameraman killed in Egypt", "text_b": "I'm not sure if it's true that Sky News is in trouble, but it's definitely true that I've never seen them as good as they are now.", "label": "0"}

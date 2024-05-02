@@ -3,6 +3,9 @@ import random
 from collections import defaultdict
 from typing import List
 
+import sys
+sys.path.append('/content/dino_NLPFinal/')
+
 from utils import DatasetEntry
 
 
@@ -40,7 +43,7 @@ def postprocess_dataset(
         if remove_identical_pairs and example.text_a == example.text_b:
             continue
 
-        example.label = example.label * (1 - label_smoothing) + (label_smoothing / 3 * 1.5)
+        example.label = float(example.label) * (1 - label_smoothing) + (label_smoothing / 3 * 1.5)
 
         if max_num_text_b_for_text_a_and_label > 0:
             if num_text_b_for_text_a_and_label[(example.text_a, example.label)] >= max_num_text_b_for_text_a_and_label:
@@ -68,9 +71,12 @@ if __name__ == '__main__':
                         help="The input file which contains the STS dataset")
     parser.add_argument("--output_file", type=str, required=True,
                         help="The output file to which the postprocessed STS dataset is saved")
+    
+    #add flag for to not add sampled pairs
+    parser.add_argument("--no_add_sampled_pairs", action='store_true', help="Do not add sampled pairs to the dataset")
 
     args = parser.parse_args()
 
     ds = DatasetEntry.read_list(args.input_file)
-    ds_pp = postprocess_dataset(ds)
+    ds_pp = postprocess_dataset(ds, add_sampled_pairs=not args.no_add_sampled_pairs)
     DatasetEntry.save_list(ds_pp, args.output_file)

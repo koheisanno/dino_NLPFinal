@@ -25,7 +25,7 @@ import torch
 from tqdm import tqdm
 from transformers import GPT2Tokenizer, PreTrainedTokenizer, PreTrainedModel
 
-from generation import SelfDebiasingGPT2LMHeadModel
+from generation import SelfDebiasingRepRewardGPT2LMHeadModel
 from utils import DatasetEntry
 from dotenv import load_dotenv
 
@@ -42,7 +42,8 @@ class DinoGenerator:
     def __init__(self, task_spec: Dict[str, Any], model: Union['str', 'ModelWrapper'] = None, use_openai: bool = False,
                  max_output_length: int = 40, decay_constant: float = 100, top_p: float = 0.9, top_k: int = 5,
                  remove_duplicates: bool = True, remove_identical_pairs: bool = False, min_num_words: int = -1, min_num_tokens: int = -1,
-                 keep_outputs_without_eos: bool = False, allow_newlines_in_outputs: bool = False, chat_completions:bool = False):
+                 keep_outputs_without_eos: bool = False, allow_newlines_in_outputs: bool = False, chat_completions:bool = False,
+                 no_self_debias:bool = False, no_rep_reward:bool = False):
         """
         :param task_spec: the task specification
         :param model: a wrapper around the underlying language model.
@@ -64,7 +65,23 @@ class DinoGenerator:
         self.model = model
         self.use_openai = use_openai
         self.max_output_length = max_output_length
-        self.decay_constant = decay_constant
+        self.no_self_debias = no_self_debias
+        self.no_rep_reward = no_rep_reward
+        self.labels = list(task_spec['labels'].keys())
+        self.instructions = {label: task_spec['labels'][label]['instruction'] for label in self.labels}
+
+        if self.no_self_debias:
+            self.decay_constant = 0
+            self.counter_labels = {label: [] for label in self.labels}
+        else:
+            self.decay_constant = decay_constant
+            self.counter_labels = {label: task_spec['labels'][label].get('counter_labels', []) for label in self.labels}
+        
+        if not self.no_rep_reward:
+            self.repetition_weights = {label: task_spec['labels'][label].get('repetition_weights', []) for label in self.labels}
+        else:
+            self.repetition_weights = {label: [1.0, 1.0] for label in self.labels}
+
         self.top_p = top_p
         self.top_k = top_k
         self.remove_duplicates = remove_duplicates
@@ -75,9 +92,6 @@ class DinoGenerator:
         self.allow_newlines_in_outputs = allow_newlines_in_outputs
         self.chat_completions = chat_completions
 
-        self.labels = list(task_spec['labels'].keys())
-        self.instructions = {label: task_spec['labels'][label]['instruction'] for label in self.labels}
-        self.counter_labels = {label: task_spec['labels'][label].get('counter_labels', []) for label in self.labels}
 
         if self.use_openai:
             self.client = OpenAI()
@@ -158,7 +172,14 @@ class DinoGenerator:
             counter_instructions = [
                 self._build_instruction(other_label, input_text_or_id, generate_with_inputs) for other_label in self.counter_labels[label]
             ]
-            model_outputs = self.model.generate_self_debiasing(
+            instruction_template = self.instructions[label]
+            reward_start_ind = instruction_template.find(PLACEHOLDER_STR)
+            reward_start = len(self.model._tokenizer.tokenize(instruction[:reward_start_ind])) + 1
+            reward_end = reward_start+len(self.model._tokenizer.tokenize(input_text_or_id))
+            penalty_start = len(self.model._tokenizer.tokenize(instruction)) + 1
+            rep_weights = self.repetition_weights[label]
+            model_outputs = self.model.generate_self_debiasing_rep_reward(
+                rep_weights=rep_weights, rep_indices=[reward_start, reward_end, penalty_start],
                 input_text=instruction, debiasing_texts=counter_instructions, num_samples=num_entries, decay_constant=self.decay_constant,
                 do_sample=True, min_length=self.max_output_length, max_length=self.max_output_length, top_k=self.top_k, top_p=self.top_p
             )
@@ -244,7 +265,9 @@ class ModelWrapper(ABC):
         pass
 
     @abstractmethod
-    def generate_self_debiasing(self, input_text: str, debiasing_texts: List[str], num_samples: int = 1, decay_constant: float = 100,
+    def generate_self_debiasing_rep_reward(self, 
+                no_self_debias:bool, no_rep_reward:bool, rep_weights: Optional[List[float]], rep_indices: Optional[List[int]],
+                input_text: str, debiasing_texts: List[str], num_samples: int = 1, decay_constant: float = 100,
                                 epsilon: float = 0.01, debug: bool = False, **kwargs) -> List[str]:
         """
         Generates continuations for the given input texts with self-debiasing.
@@ -268,7 +291,7 @@ class GPT2Wrapper(ModelWrapper):
         """
         super().__init__(use_cuda=use_cuda)
         self._tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-        self._model = SelfDebiasingGPT2LMHeadModel.from_pretrained(model_name)  # type: SelfDebiasingGPT2LMHeadModel
+        self._model = SelfDebiasingRepRewardGPT2LMHeadModel.from_pretrained(model_name)  # type: SelfDebiasingGPT2LMHeadModel
         if use_cuda:
             self._model.parallelize()
         self._tokenizer.pad_token = self._tokenizer.eos_token
@@ -286,13 +309,14 @@ class GPT2Wrapper(ModelWrapper):
         output_ids = self._model.generate(input_ids, pad_token_id=self._tokenizer.eos_token_id, **kwargs)[0]
         return self._tokenizer.decode(output_ids)
 
-    def generate_self_debiasing(self, input_text: str, debiasing_texts: List[str], num_samples: int = 1, decay_constant: float = 100,
-                                epsilon: float = 0.01, debug: bool = False, min_length: int = None, max_length: int = None,
-                                **kwargs) -> List[str]:
+    def generate_self_debiasing_rep_reward(self, rep_weights: Optional[List[float]], rep_indices: Optional[List[int]],
+                                           input_text: str, debiasing_texts: List[str], num_samples: int = 1, decay_constant: float = 100,
+                                           epsilon: float = 0.01, debug: bool = False, min_length: int = None, max_length: int = None,
+                                            **kwargs) -> List[str]:
 
         self._model.init_logits_processor(num_debiasing_prefixes=len(debiasing_texts), decay_constant=decay_constant, epsilon=epsilon,
-                                          debug=debug, tokenizer=self._tokenizer)
-
+                                          debug=debug, tokenizer=self._tokenizer, rep_weights=rep_weights, rep_indices=rep_indices)
+        
         inputs = [input_text] * num_samples
         for debiasing_text in debiasing_texts:
             inputs += [debiasing_text] * num_samples

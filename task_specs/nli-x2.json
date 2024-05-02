@@ -2,20 +2,23 @@
     "task_name": "nli-x2",
         "labels": {
             "2": {
-            "instruction": "Task: Write a hypothesis that logically follows from the premise.\nPremise: \"<X1>\"\nHypothesis: \"",
-            "counter_labels": [
-            ]
+                "instruction": "Task: Write a hypothesis that logically follows from the premise.\nPremise: \"<X1>\"\nHypothesis: \"",
+                "counter_labels": [
+                    "0"
+                ]
             },
             "1": {
-            "instruction": "Task: Write a hypothesis that neither logically follows from nor contradicts the premise.\nPremise: \"<X1>\"\nHypothesis: \"",
-            "counter_labels": [
-            ]
+                "instruction": "Task: Write a hypothesis that neither logically follows from nor contradicts the premise.\nPremise: \"<X1>\"\nHypothesis: \"",
+                "counter_labels": [
+                    "2",
+                    "0"
+                ]
             },
             "0": {
-            "instruction": "Task: Write a hypothesis that contradicts the premise.\nPremise: \"<X1>\"\nHypothesis: \"",
+                "instruction": "Task: Write a hypothesis that contradicts the premise.\nPremise: \"<X1>\"\nHypothesis: \"",
                 "counter_labels": [
+                    "1"
                 ]
             }
         }
     }
-      

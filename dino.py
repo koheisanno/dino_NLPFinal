@@ -127,6 +127,9 @@ if __name__ == '__main__':
     parser.add_argument("--chat_completions", action='store_true')
     parser.add_argument("--use_openai", action='store_true')
 
+    parser.add_argument("--no_self_debias", action='store_true')
+    parser.add_argument("--no_rep_reward", action='store_true')
+
     # Miscellaneous further parameters
     parser.add_argument("--no_cuda", action='store_true')
     parser.add_argument("--seed", type=int, default=42)
@@ -143,8 +146,6 @@ if __name__ == '__main__':
 
     with open(args.task_file, 'r', encoding='utf8') as fh:
         task_specification = json.load(fh)
-        if not args.use_openai:
-            validate_task_spec(task_specification, with_inputs=args.input_file is not None)
 
     if args.output_file_name:
         output_file_name = args.output_file_name
@@ -166,7 +167,7 @@ if __name__ == '__main__':
         decay_constant=args.decay_constant, top_p=args.top_p, top_k=args.top_k, remove_duplicates=args.remove_duplicates,
         remove_identical_pairs=args.remove_identical_pairs, min_num_words=args.min_num_words, min_num_tokens=args.min_num_tokens,
         keep_outputs_without_eos=args.keep_outputs_without_eos, allow_newlines_in_outputs=args.allow_newlines_in_outputs,
-        chat_completions=args.chat_completions
+        chat_completions=args.chat_completions, no_self_debias=args.no_self_debias, no_rep_reward=args.no_rep_reward
     )
 
     print("Starting dataset generation with DINO...")
