@@ -102,11 +102,23 @@ class DinoGenerator:
 
         input_iterator = tqdm(input_texts, desc="Dataset Entries")
         dataset = []
+        dataset_so_far = []
 
         for input_text_or_id in input_iterator:
             for label in self.labels:
-                dataset += self._generate_dataset_entries(input_text_or_id, label=label, num_entries=num_entries_per_input_and_label,
-                                                          generate_with_inputs=generate_with_inputs)            
+                new_entries = self._generate_dataset_entries(input_text_or_id, label=label, num_entries=num_entries_per_input_and_label,
+                                                          generate_with_inputs=generate_with_inputs)
+                dataset += new_entries
+                dataset_so_far += new_entries
+            
+            if len(dataset_so_far) % 10 == 0:
+                dataset_so_far = self._postprocess_dataset(dataset_so_far, generate_with_inputs)
+                # Save dataset_so_far to file.
+                with open('dataset_so_far.txt', 'a') as f:
+                    for entry in dataset_so_far:
+                        f.write(str(entry) + '\n')
+                dataset_so_far = []
+
         dataset = self._postprocess_dataset(dataset, generate_with_inputs)
         return dataset
 
