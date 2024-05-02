@@ -16,6 +16,9 @@ from sentence_transformers import SentenceTransformer, losses, models, util, Log
 from sentence_transformers.evaluation import EmbeddingSimilarityEvaluator
 from sentence_transformers.readers import InputExample
 
+import sys
+sys.path.append('/content/dino_NLPFinal/')
+
 from utils import DatasetEntry
 
 

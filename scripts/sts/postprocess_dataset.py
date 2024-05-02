@@ -3,6 +3,9 @@ import random
 from collections import defaultdict
 from typing import List
 
+import sys
+sys.path.append('/content/dino_NLPFinal/')
+
 from utils import DatasetEntry
 
 
@@ -40,7 +43,7 @@ def postprocess_dataset(
         if remove_identical_pairs and example.text_a == example.text_b:
             continue
 
-        example.label = example.label * (1 - label_smoothing) + (label_smoothing / 3 * 1.5)
+        example.label = float(example.label) * (1 - label_smoothing) + (label_smoothing / 3 * 1.5)
 
         if max_num_text_b_for_text_a_and_label > 0:
             if num_text_b_for_text_a_and_label[(example.text_a, example.label)] >= max_num_text_b_for_text_a_and_label:
