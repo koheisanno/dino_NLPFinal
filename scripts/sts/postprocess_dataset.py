@@ -71,9 +71,12 @@ if __name__ == '__main__':
                         help="The input file which contains the STS dataset")
     parser.add_argument("--output_file", type=str, required=True,
                         help="The output file to which the postprocessed STS dataset is saved")
+    
+    #add flag for to not add sampled pairs
+    parser.add_argument("--no_add_sampled_pairs", action='store_true', help="Do not add sampled pairs to the dataset")
 
     args = parser.parse_args()
 
     ds = DatasetEntry.read_list(args.input_file)
-    ds_pp = postprocess_dataset(ds)
+    ds_pp = postprocess_dataset(ds, add_sampled_pairs=not args.no_add_sampled_pairs)
     DatasetEntry.save_list(ds_pp, args.output_file)
