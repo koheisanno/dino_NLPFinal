@@ -43,8 +43,7 @@ class DinoGenerator:
                  max_output_length: int = 40, decay_constant: float = 100, top_p: float = 0.9, top_k: int = 5,
                  remove_duplicates: bool = True, remove_identical_pairs: bool = False, min_num_words: int = -1, min_num_tokens: int = -1,
                  keep_outputs_without_eos: bool = False, allow_newlines_in_outputs: bool = False, chat_completions:bool = False,
-                 no_self_debias:bool = False, no_rep_reward:bool = False, repetition_penalty: float = 1.0, 
-                 repetition_reward: float = 1.0):
+                 no_self_debias:bool = False, no_rep_reward:bool = False):
         """
         :param task_spec: the task specification
         :param model: a wrapper around the underlying language model.
@@ -79,13 +78,9 @@ class DinoGenerator:
             self.counter_labels = {label: task_spec['labels'][label].get('counter_labels', []) for label in self.labels}
         
         if not self.no_rep_reward:
-            self.repetition_penalty = repetition_penalty
-            self.repetition_reward = repetition_reward
             self.repetition_weights = {label: task_spec['labels'][label].get('repetition_weights', []) for label in self.labels}
         else:
-            self.repetition_penalty = 1.0
-            self.repetition_reward = 1.0
-            self.repetition_weights = {label: [0,0,0] for label in self.labels}
+            self.repetition_weights = {label: [1.0, 1.0] for label in self.labels}
 
         self.top_p = top_p
         self.top_k = top_k
@@ -170,7 +165,7 @@ class DinoGenerator:
             reward_start = len(self.model._tokenizer.tokenize(instruction[:reward_start_ind])) + 1
             reward_end = reward_start+len(self.model._tokenizer.tokenize(input_text_or_id))
             penalty_start = len(self.model._tokenizer.tokenize(instruction)) + 1
-            rep_weights = self.repetition_weights[label] if not self.no_rep_reward else None
+            rep_weights = self.repetition_weights[label]
             model_outputs = self.model.generate_self_debiasing_rep_reward(
                 rep_weights=rep_weights, rep_indices=[reward_start, reward_end, penalty_start],
                 input_text=instruction, debiasing_texts=counter_instructions, num_samples=num_entries, decay_constant=self.decay_constant,

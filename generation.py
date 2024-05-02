@@ -22,7 +22,7 @@ from transformers import GPT2LMHeadModel, LogitsProcessorList, LogitsProcessor, 
 from transformers.generation.utils import GenerationMixin, SampleOutput, SampleEncoderDecoderOutput, SampleDecoderOnlyOutput
 
 class SelfDebiasingRepRewardsLogitsProcessor(LogitsProcessor):
-    """This class represents a logits processor that applies self-debiasing."""
+    """This class represents a logits processor that applies self-debiasing and repetition rewarding/penalization."""
 
     def __init__(self, num_debiasing_prefixes: int = 0, decay_constant: float = 100, epsilon: float = 0.01, debug: bool = False,
                  tokenizer: Optional[PreTrainedTokenizer] = None, rep_weights: Optional[List[float]] = None, rep_indices: Optional[int] = None):
