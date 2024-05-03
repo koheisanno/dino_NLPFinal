@@ -17,7 +17,7 @@
             "0": {
                 "instruction": "Task: Write a hypothesis that contradicts the premise.\nPremise: \"<X1>\"\nHypothesis: \"",
                 "counter_labels": [
-                    "1"
+                    "2"
                 ]
             }
         }
