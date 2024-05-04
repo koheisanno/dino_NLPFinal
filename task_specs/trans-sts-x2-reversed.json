@@ -1,0 +1,35 @@
+{
+  "task_name": "trans-sts-reversed",
+  "labels": {
+    "0": {
+      "instruction": "You are given a sentence in French. Your task is to write a sentence in English that is on a completely different topic.",
+      "message": "Sentence 1 in French: \"<X1>\"\nSentence 2 in English: \"",
+      "counter_labels": ["2", "3", "4", "5"]
+    },
+    "1": {
+      "instruction": "You are given a sentence in French. Your task is to write a sentence in English that is not equivalent but is on the same topic.",
+      "message": "Sentence 1 in French: \"<X1>\"\nSentence 2 in English: \"",
+      "counter_labels": ["3", "4", "5"]
+    },
+    "2": {
+      "instruction": "You are given a sentence in French. Your task is to write a sentence in English that is not equivalent but shares some details.",
+      "message": "Sentence 1 in French: \"<X1>\"\nSentence 2 in English: \"",
+      "counter_labels": ["0", "4", "5"]
+    },
+    "3": {
+      "instruction": "You are given a sentence in French. Your task is to write a sentence in English that is roughly equivalent but where some important information differs/missing.",
+      "message": "Sentence 1 in French: \"<X1>\"\nSentence 2 in English: \"",
+      "counter_labels": ["0", "1", "5"]
+    },
+    "4": {
+      "instruction": "You are given a sentence in French. Your task is to write a sentence in English that is mostly equivalent but where some unimportant details differ.",
+      "message": "Sentence 1 in French: \"<X1>\"\nSentence 2 in English: \"",
+      "counter_labels": ["0", "1", "2"]
+    },
+    "5": {
+      "instruction": "You are given a sentence in French. Your task is to write a sentence in English that is completely equivalent in meaning.",
+      "message": "Sentence 1 in French: \"<X1>\"\nSentence 2 in English: \"",
+      "counter_labels": ["0", "1", "2", "3"]
+    }
+  }
+}
