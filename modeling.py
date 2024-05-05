@@ -128,7 +128,7 @@ class DinoGenerator:
             if len(dataset_so_far) % 10 == 0:
                 dataset_so_far = self._postprocess_dataset(dataset_so_far, generate_with_inputs)
                 # Save dataset_so_far to file in Google Drive. Note this is running in a Google Colab runtime.
-                with open('/content/drive/My Drive/dataset_so_far.txt', 'a') as f:
+                with open('/content/drive/MyDrive/dataset_so_far.txt', 'a') as f:
                     for entry in dataset_so_far:
                         f.write(str(entry) + '\n')
                 dataset_so_far = []
