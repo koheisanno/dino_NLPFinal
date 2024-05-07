@@ -12,7 +12,7 @@
                 "counter_labels": []
             },
             "0": {
-                "instruction": "Complete the following: \"There is a rumor that <X1> However the truth is:",
+                "instruction": "Complete the following: \"There is a rumor that <X1> However the truth is: ",
                 "repetition_weights": [1.1, 1.1],
                 "counter_labels": []
             }
