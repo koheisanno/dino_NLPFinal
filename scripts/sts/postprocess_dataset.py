@@ -74,9 +74,14 @@ if __name__ == '__main__':
     
     #add flag for to not add sampled pairs
     parser.add_argument("--no_add_sampled_pairs", action='store_true', help="Do not add sampled pairs to the dataset")
+    parser.add_argument("--no_label_smoothing", action='store_true', help="Do not apply label smoothing to the dataset")
 
     args = parser.parse_args()
 
     ds = DatasetEntry.read_list(args.input_file)
-    ds_pp = postprocess_dataset(ds, add_sampled_pairs=not args.no_add_sampled_pairs)
+    if args.no_label_smoothing:
+        smoothing = 0.0
+    else:
+        smoothing = 0.2
+    ds_pp = postprocess_dataset(ds, add_sampled_pairs=not args.no_add_sampled_pairs, label_smoothing=smoothing)
     DatasetEntry.save_list(ds_pp, args.output_file)
