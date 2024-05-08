@@ -10,8 +10,6 @@ def postprocess_dataset(
         dataset: List[DatasetEntry],
         remove_identical_pairs: bool = True,
         remove_duplicates: bool = True,
-        add_sampled_pairs: bool = True,
-        max_num_text_b_for_text_a_and_label: int = 2,
         seed: int = 42
 ) -> List[DatasetEntry]:
     """
@@ -26,7 +24,6 @@ def postprocess_dataset(
     :return: The postprocessed dataset.
     """
     postprocessed_dataset = []
-    num_text_b_for_text_a_and_label = defaultdict(int)
 
     rng = random.Random(seed)
     rng.shuffle(dataset)
@@ -38,21 +35,10 @@ def postprocess_dataset(
         if remove_identical_pairs and example.text_a == example.text_b:
             continue
 
-        if max_num_text_b_for_text_a_and_label > 0:
-            if num_text_b_for_text_a_and_label[(example.text_a, example.label)] >= max_num_text_b_for_text_a_and_label:
-                continue
+        example.text_b = example.text_b.replace('\u00a0', '').replace('_', '')
+
         postprocessed_dataset.append(example)
-        num_text_b_for_text_a_and_label[(example.text_a, example.label)] += 1
 
-    if add_sampled_pairs:
-        sampled_dataset = []
-
-        for text_a in set(x.text_a for x in postprocessed_dataset):
-            for _ in range(max_num_text_b_for_text_a_and_label):
-                text_b = rng.choice(postprocessed_dataset).text_b
-                sampled_dataset.append(DatasetEntry(text_a=text_a, text_b=text_b, label=0))
-
-        postprocessed_dataset += sampled_dataset
     return postprocessed_dataset
 
 
