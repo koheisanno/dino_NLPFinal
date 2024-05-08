@@ -3,6 +3,9 @@ import random
 from collections import defaultdict
 from typing import List
 
+import sys
+sys.path.append('/content/dino_NLPFinal/')
+
 from utils import DatasetEntry
 
 
