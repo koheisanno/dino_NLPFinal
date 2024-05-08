@@ -2,17 +2,17 @@
     "task_name": "nli-x2",
         "labels": {
             "2": {
-                "instruction": "Task: Complete the following sentence. \"<X1> In other words, ",
+                "instruction": "Task: Complete the following sentence.\n\"<X1>. In other words, ",
                 "repetition_weights": [0.8, 1.1],
                 "counter_labels": []
             },
             "1": {
-                "instruction": "Task: Complete the following sentence. \"<X1> Furthermore, ",
+                "instruction": "Task: Complete the following sentence.\n\"<X1>. Furthermore, ",
                 "repetition_weights": [1.3, 1.3],
                 "counter_labels": []
             },
             "0": {
-                "instruction": "Task: Complete the following sentence. \"There is a rumor that <X1> However the truth is: ",
+                "instruction": "Task: Complete the following sentence.\n\"There is a rumor that <X1>. However the truth is: ",
                 "repetition_weights": [1.1, 1.1],
                 "counter_labels": []
             }
